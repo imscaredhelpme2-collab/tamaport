@@ -41,19 +41,27 @@ fun installedPlatforms(): List<Int> =
 val wantedNdk = (findProperty("ndkVersion") as String?)?.trim().orEmpty()
 val ndks = installedNdks()
 val ndk: File? = ndks.firstOrNull { it.name == wantedNdk } ?: ndks.lastOrNull()
+val wantedCmake = (findProperty("cmakeVersion") as String?)?.trim().orEmpty()
 val cmakes = installedCmakes().filter { compareVersions(it, "3.22.1") >= 0 }
+val cmake: String? = cmakes.firstOrNull { it == wantedCmake } ?: cmakes.lastOrNull()
+// AGP requires android.ndkVersion to equal the NDK's real revision (from source.properties).
+val ndkRevision: String? = ndk?.let { dir ->
+    dir.resolve("source.properties").readLines().firstOrNull { it.startsWith("Pkg.Revision") }
+        ?.substringAfter("=")?.trim()?.takeIf { it.isNotEmpty() } ?: dir.name
+}
 val platforms = installedPlatforms()
 val wantedSdk = (findProperty("compileSdkVer") as String?)?.trim()?.toIntOrNull() ?: 35
 val compileSdk: Int? = if (wantedSdk in platforms) wantedSdk else platforms.filter { it >= 33 }.maxOrNull()
 
 println("[Tamagotchi] SDK folder : ${sdkDir ?: "NOT FOUND"}")
-println("[Tamagotchi] NDK        : ${ndk?.name ?: "NONE"}   (installed: ${ndks.map { it.name }})")
-println("[Tamagotchi] CMake      : ${cmakes.lastOrNull() ?: "NONE >= 3.22.1"}   (installed: ${installedCmakes()})")
+println("[Tamagotchi] NDK        : ${ndkRevision ?: "NONE"}   (installed: ${ndks.map { it.name }})")
+println("[Tamagotchi] CMake      : ${cmake ?: "NONE >= 3.22.1"}   (installed: ${installedCmakes()})")
 println("[Tamagotchi] Platform   : ${compileSdk ?: "NONE >= 33"}   (installed: $platforms)")
 
 extra["tg.sdkDir"] = sdkDir?.absolutePath
 extra["tg.ndkPath"] = ndk?.absolutePath
-extra["tg.cmakeVersion"] = cmakes.lastOrNull()
+extra["tg.cmakeVersion"] = cmake
+extra["tg.ndkVersion"] = ndkRevision
 extra["tg.compileSdk"] = compileSdk
 
 val problems = mutableListOf<String>()
