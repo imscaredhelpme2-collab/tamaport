@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tamagotchi Classic</string>
+    <string name="call_channel">Tamagotchi calls</string>
+    <string name="call_ticker">Tamagotchi is calling you!</string>
+    <string name="call_title">Tamagotchi</string>
+    <string name="call_text">Tamagotchi is calling you!</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_close">Close</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_end_app">Exit from the game.</string>
+    <string name="picture">Picture</string>
+    <string name="save_to_gallery">Save to gallery</string>
+    <string name="saved_ok">Saved picture to gallery.</string>
+    <string name="save_failed">Add to photo failed.</string>
+    <string name="missing_engine">The game files are missing. Run setup_assets.sh (or setup_assets.ps1) with your original Tamagotchi Classic APK, then rebuild.</string>
+</resources>
