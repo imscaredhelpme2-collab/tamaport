@@ -1,0 +1,38 @@
+body {
+	margin:0;
+	background:url(img/bg_main.png);
+	height:100%;
+}
+
+img {
+	border:0;
+}
+
+li {
+	line-height:150%;
+}
+
+
+#wrap {
+	width:auto;
+	margin:0 auto;
+}
+
+.title {
+	margin:auto;
+	background-color:#8cdaf2;
+
+}
+
+#menu {
+	font-size:140%;
+	text-align:left;
+	padding:10px 0 10px 0;
+}
+
+.category {
+	background-color:#b2de54;
+	text-align:left;
+	padding:5px 0 5px 20px;
+	font-weight:bold;
+}

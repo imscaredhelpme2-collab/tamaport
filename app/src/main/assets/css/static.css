@@ -1,0 +1,123 @@
+
+/*******************
+ reset design
+*******************/
+
+body{
+	margin:0px;
+	padding:0px;
+	font-family: sans-serif;
+	/*-webkit-text-size-adjust: none;*/
+}
+
+body,p,td,li,dt,dd,h1,h2,h3,h4,h5,h6{
+	font-size:12px;
+	font-weight:100;
+	line-height:125%;
+}
+
+/*******************
+ base design
+*******************/
+
+p , .txtblock{
+	display:block;
+	padding:0px 5px 0px 5px;
+	margin:8px 0px 8px 0px;
+}
+
+ul{
+	margin:0px;
+	padding:0px;
+	list-style-type:none;
+}
+
+dl{
+	margin:0px;
+	padding:0px;
+}
+
+dt{
+	display:block;
+	float:left;
+}
+
+dd{
+	display:block;
+	margin:0px;
+}
+
+
+ul:after , dl:after , section:after , .list:after{
+	content: "";
+	clear: both;
+	height: 0;
+	display: block;
+	visibility: hidden;
+}
+
+label{
+	display:inline-block;
+}
+
+/*******************
+ page header & footer
+*******************/
+
+header,section,footer{
+	display:block;
+	margin:0px;
+	padding:0px;
+	overflow:hidden;
+}
+header:after,section:after,footer:after,nav:after {
+	content: "";
+	clear: both;
+	height: 0;
+	display: block;
+	visibility: hidden;
+}
+
+/*******************
+ accordion
+*******************/
+.accordion{
+	display:none;
+}
+
+
+
+/*******************
+ scrollwnd
+*******************/
+._scrollwnd{
+	overflow:hidden;
+}
+._sectionwnd{
+	overflow:hidden;
+}
+
+/*******************
+ bar chart
+*******************/
+
+.chart{
+	display:inline-block;
+	position:relative;
+}
+
+.chart>*{
+	display:inline-block;
+	position:relative;
+	float:left;
+	width:1%;
+	height:inherit;
+}
+
+.chart:after , .chart>*:after{
+	content:attr(data);
+	display:inline-block;
+	position:absolute;
+	text-align:center;
+	width:100%;
+}

@@ -1,0 +1,6 @@
+TBTNID_TOP_BTN		,-320,0,	128,108,0,0,128,112,		128,132,0,120,128,132,		TRUE,radio,parent_center_offset,0
+TBTNID_GAME_BTN		,-192,0,	128,108,128,0,128,112,		128,132,128,120,128,132,	TRUE,radio,parent_center_offset,0
+TBTNID_ZUKAN_BTN	,-64,0,		128,108,256,0,128,112,		128,132,256,120,128,132,	TRUE,radio,parent_center_offset,0
+TBTNID_CHANGE_BTN	,130,0,		91,100,450,0,91,104,		91,100,450,128,91,104,		TRUE,normal,parent_center_offset,0
+TBTNID_SNS_BTN		,225,0,		91,100,545,0,91,104,		91,100,545,128,91,104,		TRUE,normal,parent_center_offset,0
+SBTNID_RESET        ,-265,-330,    530,71,0,0,530,71,          530,71,0,72,530,71,      TRUE,normal,parent_center_offset,0

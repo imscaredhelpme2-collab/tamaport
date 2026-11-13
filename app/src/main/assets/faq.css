@@ -1,0 +1,43 @@
+body {
+	margin:0;
+	background:#e9fce8;
+	height:100%;
+}
+
+img {
+	border:0;
+}
+
+li {
+	line-height:150%;
+}
+
+
+#wrap {
+	width:auto;
+	margin:0 auto;
+}
+
+.title {
+	margin:auto;
+	background-color:#f7c97d;
+
+}
+
+.title2 {
+	margin:auto;
+	background-color:#f9b6db;
+
+}
+
+#menu {
+	font-size:140%;
+	text-align:left;
+	padding:10px 0 10px 0;
+}
+
+.category {
+	text-align:left;
+	padding:10px 0 0 20px;
+	font-weight:bold;
+}

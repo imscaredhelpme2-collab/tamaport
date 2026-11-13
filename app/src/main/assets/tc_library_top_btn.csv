@@ -1,0 +1,4 @@
+TBTNID_TAMAGOTCHI	,-238,-210, 477,119,0,0,477,119,    474,103,480,11,474,103,TRUE,normal,parent_center_offset,0
+TBTNID_BODY         ,-238,110,  477,119,0,238,477,119,    474,103,480,250,474,103,TRUE,normal,parent_center_offset,0
+TBTNID_WALLPAPER    ,-238,-50,  477,119,0,118,477,119,    474,103,480,130,474,103,TRUE,normal,parent_center_offset,0
+TBTNID_BACK         ,-92,270,   184,94,0,358,184,94,    184,94,188,358,184,94,TRUE,normal,parent_center_offset,0
