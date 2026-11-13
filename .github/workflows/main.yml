@@ -10,26 +10,34 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     permissions:
       contents: write        # needed to create the release
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
       - name: Unpack game files from your APK (game/ folder)
         run: |
+          echo "Contents of game/:"; ls -la game/ || true
           APK=$(ls game/*.apk game/*.zip 2>/dev/null | head -n 1)
           if [ -z "$APK" ]; then
             echo "::error::Put your original Tamagotchi Classic APK (or a .zip copy of it) into the game/ folder."
             exit 1
           fi
-          echo "Using $APK"
+          echo "Using: $APK"
+          file "$APK" || true
+          SIZE=$(wc -c < "$APK")
+          if [ "$SIZE" -lt 1000000 ]; then
+            echo "::error::$APK is only $SIZE bytes - that is not a real APK (it should be about 14 MB). Re-upload it."
+            head -c 300 "$APK"; echo
+            exit 1
+          fi
           sh setup_assets.sh "$APK"
 
       - name: Install NDK, CMake and SDK platform
