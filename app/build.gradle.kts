@@ -12,6 +12,7 @@ val abiList = (project.findProperty("abis") as String).split(",").map { it.trim(
 android {
     namespace = "com.tamaport.classic"
     compileSdk = compileSdkVer
+    ndkVersion = extra["tg.ndkVersion"] as String   // must equal the revision of the NDK at ndkPath
     ndkPath = extra["tg.ndkPath"] as String
 
     defaultConfig {
