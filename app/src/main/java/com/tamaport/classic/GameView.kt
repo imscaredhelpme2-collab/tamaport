@@ -63,6 +63,7 @@ class GameView(private val activity: GameActivity, private val host: GameHost) :
     init {
         setEGLContextClientVersion(2)
         setEGLConfigChooser(8, 8, 8, 8, 0, 8)      // the engine uses the stencil buffer for clipping
+        preserveEGLContextOnPause = true           // keep textures alive across pause/resume when the device allows it
         setRenderer(renderer)
         renderMode = RENDERMODE_CONTINUOUSLY
     }

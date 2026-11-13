@@ -57,6 +57,9 @@ class TextureManager(private val ctx: Context) {
 
     /** The GL context was lost and recreated: every old id is invalid, so rebuild all textures. */
     fun onContextLost() {
+        // Every old GL id belongs to the DEAD context. Forget them first: if we deleted one, the number could now be
+        // a brand-new texture of the new context (ids are reused), which swapped the pictures around.
+        for (e in entries) e?.glId = 0
         for (e in entries) {
             when (e) {
                 is FileEntry -> createFile(e)
