@@ -1,0 +1,60 @@
+name: Build APK
+
+# Builds the app in the cloud (Ubuntu runner with a real NDK) so nothing has to be compiled on your phone/tablet.
+# Start it from the "Actions" tab -> "Build APK" -> "Run workflow".
+# The finished APK is published under "Releases" (and also as a run "Artifact").
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write        # needed to create the release
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Unpack game files from your APK (game/ folder)
+        run: |
+          APK=$(ls game/*.apk game/*.zip 2>/dev/null | head -n 1)
+          if [ -z "$APK" ]; then
+            echo "::error::Put your original Tamagotchi Classic APK (or a .zip copy of it) into the game/ folder."
+            exit 1
+          fi
+          echo "Using $APK"
+          sh setup_assets.sh "$APK"
+
+      - name: Install NDK, CMake and SDK platform
+        run: |
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKM" --licenses > /dev/null || true
+          "$SDKM" "ndk;27.0.12077973" "cmake;3.22.1" "platforms;android-35"
+
+      - name: Build debug APK
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug
+
+      - name: Upload APK as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tamagotchi-classic-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+      - name: Publish APK as a release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          APK=$(ls app/build/outputs/apk/debug/*.apk | head -n 1)
+          gh release create "build-${{ github.run_number }}" "$APK" \
+            --title "Build ${{ github.run_number }}" \
+            --notes "Debug build of the modern Tamagotchi Classic port."
