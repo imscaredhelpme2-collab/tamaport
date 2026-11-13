@@ -38,6 +38,16 @@ android {
         }
     }
 
+    // A fixed signing key (kept in the repo) so every build installs as an UPDATE and keeps your pet's save data.
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
