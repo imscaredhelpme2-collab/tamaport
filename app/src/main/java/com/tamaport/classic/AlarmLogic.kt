@@ -25,7 +25,7 @@ object AlarmLogic {
     private const val CHANNEL = "tama_call"
     private const val NOTIF_ID = 1001
 
-    fun deleteInfo(ctx: Context) { ctx.deleteFile(INFO_FILE) }
+    fun deleteInfo(ctx: Context) { ctx.deleteFile(INFO_FILE); ctx.deleteFile("$INFO_FILE.bak"); ctx.deleteFile("$INFO_FILE.tmp") }
 
     /** Original `aj.a(ctx, cls, ms)`: one alarm, `delayMs` from now. */
     fun scheduleIn(ctx: Context, delayMs: Int) {

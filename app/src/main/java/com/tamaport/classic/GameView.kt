@@ -45,6 +45,7 @@ class GameView(private val activity: GameActivity, private val host: GameHost) :
 
         override fun onDrawFrame(gl: GL10?) {
             if (!started) return
+            limitFrameRate()
             if (resumePending) {
                 if (resumeFrames == 0) host.sound.resumeAll()
                 if (resumeFrames < 10) { resumeFrames++; return }
@@ -66,6 +67,19 @@ class GameView(private val activity: GameActivity, private val host: GameHost) :
         preserveEGLContextOnPause = true           // keep textures alive across pause/resume when the device allows it
         setRenderer(renderer)
         renderMode = RENDERMODE_CONTINUOUSLY
+    }
+
+    /** Caps rendering at ~60 fps: on 90/120 Hz screens the emulator would otherwise burn CPU/battery for no visible gain. */
+    private var lastFrameNs = 0L
+    private fun limitFrameRate() {
+        val target = 16_000_000L
+        val now = System.nanoTime()
+        val elapsed = now - lastFrameNs
+        if (lastFrameNs != 0L && elapsed in 0 until target) {
+            val wait = target - elapsed
+            try { Thread.sleep(wait / 1_000_000L, (wait % 1_000_000L).toInt()) } catch (e: InterruptedException) { /* ignore */ }
+        }
+        lastFrameNs = System.nanoTime()
     }
 
     fun markResume() { resumePending = true; resumeFrames = 0 }
